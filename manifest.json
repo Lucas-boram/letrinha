@@ -1,0 +1,10 @@
+{
+  "name": "Letrinha",
+  "short_name": "Letrinha",
+  "description": "Aprender a ler brincando, com a Cora.",
+  "start_url": "jogo.html",
+  "display": "standalone",
+  "background_color": "#bfe0ff",
+  "theme_color": "#ffc83d",
+  "lang": "pt-BR"
+}

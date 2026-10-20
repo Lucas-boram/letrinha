@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Letrinha — seu filho aprendendo a ler brincando</title>
+<meta name="description" content="Jogo de alfabetização para crianças de 2 a 8 anos. 10 minutos por dia, com a voz da Cora, e um painel que mostra ao responsável o que a criança já aprendeu.">
+<meta name="theme-color" content="#ffc83d">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="owl" viewBox="0 0 120 120">
+    <path d="M26 30 L38 14 L48 30 Z M94 30 L82 14 L72 30 Z" fill="#a9744f" stroke="#1f2a44" stroke-width="4" stroke-linejoin="round"/>
+    <ellipse cx="60" cy="68" rx="40" ry="42" fill="#a9744f" stroke="#1f2a44" stroke-width="4"/>
+    <ellipse cx="60" cy="82" rx="24" ry="26" fill="#ffe2b8"/>
+    <circle cx="43" cy="55" r="16" fill="#fff" stroke="#1f2a44" stroke-width="4"/>
+    <circle cx="77" cy="55" r="16" fill="#fff" stroke="#1f2a44" stroke-width="4"/>
+    <circle cx="45" cy="56" r="6.5" fill="#1f2a44"/>
+    <circle cx="75" cy="56" r="6.5" fill="#1f2a44"/>
+    <circle cx="47" cy="53.5" r="2" fill="#fff"/>
+    <circle cx="77" cy="53.5" r="2" fill="#fff"/>
+    <ellipse cx="43" cy="55" rx="16" ry="0" fill="#a9744f" stroke="#1f2a44" stroke-width="4"><animate attributeName="ry" values="0;0;16;0" keyTimes="0;0.92;0.96;1" dur="4s" repeatCount="indefinite"/></ellipse>
+    <ellipse cx="77" cy="55" rx="16" ry="0" fill="#a9744f" stroke="#1f2a44" stroke-width="4"><animate attributeName="ry" values="0;0;16;0" keyTimes="0;0.92;0.96;1" dur="4s" repeatCount="indefinite"/></ellipse>
+    <path d="M53 68 L67 68 L60 80 Z" fill="#ffc83d" stroke="#1f2a44" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M18 70 Q10 92 28 100 Q30 82 18 70 Z M102 70 Q110 92 92 100 Q90 82 102 70 Z" fill="#8a5b3b" stroke="#1f2a44" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M46 108 L46 114 M54 108 L54 114 M66 108 L66 114 M74 108 L74 114" stroke="#1f2a44" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="star" viewBox="0 0 24 24">
+    <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z" fill="#ffc83d" stroke="#1f2a44" stroke-width="1.8" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./"><svg aria-hidden="true"><use href="#owl"/></svg>Letrinha</a>
+    <nav aria-label="Principal">
+      <a href="#como">Como funciona</a>
+      <a href="#pais">Para pais</a>
+      <a href="#duvidas">Dúvidas</a>
+      <a class="btn" href="jogo.html">Jogar grátis</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Seu filho aprende a ler <em>brincando</em>, em 10 minutos por dia.</h1>
+      <p class="lead">A Cora, uma coruja que fala português, pede letras, sílabas e palavras em missões curtas. A criança escuta, toca e vê a palavra aparecer. Você acompanha tudo pelo painel dos pais.</p>
+      <div class="cta-row">
+        <a class="btn" href="jogo.html">Jogar as primeiras fases grátis</a>
+        <a class="btn ghost" href="#preco">Ver o plano</a>
+      </div>
+      <p class="fine">Para crianças de 2 a 8 anos (de 2 a 3, só ouvir e tocar, com um adulto junto). Funciona no celular, tablet e computador, sem instalar nada.</p>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <div class="stars"><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg></div>
+      <svg class="owl"><use href="#owl"/></svg>
+      <div class="bubble">Toque na sílaba que eu falei: “BO”</div>
+      <div class="tiles">
+        <div class="tile">BA</div>
+        <div class="tile right">BO</div>
+        <div class="tile">BU</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="como">
+  <div class="wrap">
+    <h2>Uma missão de cada vez, do som até a palavra.</h2>
+    <ol>
+      <li><strong>A criança escuta a Cora</strong><span>Cada rodada começa com o som. Primeiro as vogais, depois as sílabas, depois palavras inteiras.</span></li>
+      <li><strong>Toca a resposta certa</strong><span>Se errar, a Cora repete o som com calma e a criança tenta de novo, sem bronca e sem tela vermelha.</span></li>
+      <li><strong>Monta a palavra com figura</strong><span>Ela vê uma bola, escuta “bola” e junta BO + LA. É assim que sílaba vira leitura.</span></li>
+      <li><strong>Cada idade tem o seu nível</strong><span>São 4 mundos: vogais, sílabas, primeiras palavras e palavras grandes. O jogo começa no ponto certo para a idade e fica mais difícil na hora certa.</span></li>
+      <li><strong>Ganha estrelas e mantém a sequência</strong><span>Meta diária curta e fases que se destravam. O hábito de voltar todo dia é o que faz a criança evoluir.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="parents band" id="pais">
+  <div class="wrap">
+    <div>
+      <h2>Você sabe exatamente o que ela já aprendeu.</h2>
+      <p>O painel dos pais mostra as palavras que a criança já monta sozinha e as sílabas que ainda dão trabalho, para você reforçar na conversa do dia a dia.</p>
+      <p>Um portão com conta de multiplicar mantém o painel fora do alcance das crianças.</p>
+    </div>
+    <div class="report" aria-hidden="true">
+      <div class="row">
+        <h3>Palavras que já monta</h3>
+        <div class="chips"><span class="chip">BOLA</span><span class="chip">CASA</span><span class="chip">GATO</span><span class="chip">LUA</span><span class="chip">UVA</span></div>
+      </div>
+      <div class="row">
+        <h3>Para reforçar</h3>
+        <div class="chips"><span class="chip warn">BI</span><span class="chip warn">PU</span><span class="chip warn">ME</span></div>
+      </div>
+      <div class="meta"><span>7 dias seguidos</span><span>34 estrelas</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="preco">
+  <div class="wrap">
+    <div>
+      <h2>Um plano para a família toda.</h2>
+      <p style="margin-top:1.1rem;color:var(--ink-soft)">Deixe seu e-mail para ser avisado quando abrirmos as vagas e garantir o preço de lançamento.</p>
+      <form class="waitlist" id="waitlist" novalidate>
+        <label for="email" class="sr" style="position:absolute;left:-9999px">Seu e-mail</label>
+        <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="seu@email.com" required>
+        <button class="btn" type="submit">Quero entrar na lista</button>
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="price-box">
+      <div class="price">R$ 19,90 <small>/mês</small></div>
+      <ul>
+        <li>Plano gratuito com algumas fases</li>
+        <li>Premium: todas as fases e novas todo mês</li>
+        <li>Painel dos pais com resumo semanal e brincadeiras fora da tela</li>
+        <li>Ou R$ 149,90 por ano</li>
+      </ul>
+      <a class="btn" href="jogo.html">Testar a primeira fase</a>
+      <p class="alt">Valores em teste, ainda sem cobrança ativa. Entre na lista de espera.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="duvidas">
+  <div class="wrap">
+    <h2>Dúvidas comuns</h2>
+    <details>
+      <summary>Os dados do meu filho ficam seguros?</summary>
+      <p>Coletamos o mínimo: o primeiro nome e o progresso nas fases. Só o responsável legal pode autorizar o uso, e pode apagar tudo quando quiser. Sem anúncios e sem venda de dados.</p>
+    </details>
+    <details>
+      <summary>Serve para qual idade?</summary>
+      <p>De 2 a 8 anos. Aos 2 e 3 anos a criança só ouve e toca, com um adulto ao lado, sem precisar ler. Ao cadastrar a idade, o jogo escolhe o ponto de partida (quem tem 4 anos começa nas vogais, quem tem 7 já vai para as palavras) e ajusta o número de opções, o tamanho das rodadas e a velocidade da voz.</p>
+    </details>
+    <details>
+      <summary>Substitui a escola ou a professora?</summary>
+      <p>Não. O Letrinha complementa a alfabetização feita na escola, com prática curta e divertida em casa.</p>
+    </details>
+    <details>
+      <summary>Posso pedir reembolso?</summary>
+      <p>Sim. Pela lei do consumidor, você tem 7 dias após a contratação para desistir e receber o valor de volta.</p>
+    </details>
+    <details>
+      <summary>Precisa de internet?</summary>
+      <p>Para abrir o jogo sim. A voz da Cora usa o recurso de fala do próprio aparelho, então a qualidade varia conforme o celular.</p>
+    </details>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© Letrinha. Feito para as famílias do Brasil.</span>
+    <a href="pais.html">Painel dos pais</a>
+    <small>Música: “Daily Beetle” de Kevin MacLeod (incompetech.com), licença <a href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</small>
+  </div>
+</footer>
+
+<script>
+  const form = document.getElementById('waitlist');
+  const msg = document.getElementById('formMsg');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) { msg.textContent = 'Confira o e-mail: parece que falta algo.'; return; }
+    const list = JSON.parse(localStorage.getItem('letrinha.waitlist') || '[]');
+    list.push({ email, at: new Date().toISOString() });
+    localStorage.setItem('letrinha.waitlist', JSON.stringify(list));
+    msg.textContent = 'Pronto! Avisaremos você por e-mail.';
+    form.reset();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Letrinha — painel dos pais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="game.css">
+<style>body{background:var(--cream)}</style>
+</head>
+<body>
+<div class="game-shell">
+  <div class="hud"><a class="home" href="jogo.html">Voltar ao jogo</a></div>
+  <main id="app" class="panel" aria-live="polite"></main>
+</div>
+
+<script>
+(() => {
+  const KEY = 'letrinha.v1';
+  const app = document.getElementById('app');
+  const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch { return null; } };
+
+  const LEVEL_WORLD = { 1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 2, 8: 3, 9: 3, 10: 3, 11: 3, 12: 4, 13: 4, 14: 4 };
+  const WORLD_NAME = { 1: 'vogais', 2: 'sílabas', 3: 'primeiras palavras', 4: 'palavras grandes' };
+  const OFFLINE = {
+    1: { t: 'Caça às vogais', obj: 'Reconhecer as vogais no dia a dia.', how: 'Procurem em rótulos, livros e placas as letras A, E, I, O, U e digam o som de cada uma.', mat: 'Embalagens, revistas ou livros.', age: '4 a 6 anos', adult: 'Acompanha e lê junto.', time: '10 min', care: 'Use só materiais que a criança possa manusear sem risco.' },
+    2: { t: 'Sílabas na cozinha', obj: 'Perceber sílabas dentro das palavras.', how: 'Escolham objetos da casa e batam palmas a cada sílaba: pa-to (2 palmas), ba-na-na (3 palmas).', mat: 'Objetos comuns da casa.', age: '4 a 7 anos', adult: 'Participa e dá o exemplo.', time: '10 min', care: 'Evite objetos cortantes ou quentes.' },
+    3: { t: 'Etiquetas na casa', obj: 'Relacionar palavras escritas a objetos reais.', how: 'Escrevam em papeizinhos palavras que a criança já montou (ex.: CASA, BOLA) e colem nos objetos.', mat: 'Papel, caneta e fita adesiva.', age: '5 a 8 anos', adult: 'Escreve e lê junto.', time: '15 min', care: 'Use fita fácil de remover para não danificar móveis.' },
+    4: { t: 'Caça-palavras falado', obj: 'Ouvir e separar sílabas de palavras maiores.', how: 'Diga uma palavra grande (ex.: telefone) e peça para a criança falar cada sílaba devagar e contar quantas são.', mat: 'Nenhum.', age: '6 a 8 anos', adult: 'Escolhe as palavras e comemora os acertos.', time: '10 min', care: '' },
+  };
+  const daysAgo = (d) => (Date.now() - new Date(d + 'T12:00:00').getTime()) / 864e5;
+  const recent = (S) => (S.log || []).filter(e => daysAgo(e.d) <= 7);
+  function weekly(S) {
+    const r = recent(S);
+    if (!r.length) return 'Ainda não há fases concluídas nos últimos 7 dias.';
+    const days = new Set(r.map(e => e.d)).size;
+    const worlds = [...new Set(r.map(e => WORLD_NAME[LEVEL_WORLD[e.l]]))];
+    const stars = r.reduce((n, e) => n + e.s, 0);
+    return `Nos últimos 7 dias, ${esc(S.name)} jogou em ${days} dia${days > 1 ? 's' : ''} e concluiu ${r.length} fase${r.length > 1 ? 's' : ''}, praticando ${worlds.join(', ')}. Somou ${stars} estrela${stars > 1 ? 's' : ''}. Este resumo mostra só o que foi feito no aplicativo e não é uma avaliação do desenvolvimento da criança.`;
+  }
+  function offline(S) {
+    const r = recent(S);
+    const w = r.length ? LEVEL_WORLD[r[r.length - 1].l] : 1;
+    const o = OFFLINE[w];
+    return `<h4 style="margin-bottom:.4rem">${o.t}</h4>
+      <ul style="padding-left:1.1rem;display:grid;gap:.25rem">
+        <li><b>Objetivo:</b> ${o.obj}</li><li><b>Como fazer:</b> ${o.how}</li><li><b>Materiais:</b> ${o.mat}</li>
+        <li><b>Idade:</b> ${o.age}</li><li><b>Adulto:</b> ${o.adult}</li><li><b>Duração:</b> ${o.time}</li>${o.care ? `<li><b>Cuidado:</b> ${o.care}</li>` : ''}
+      </ul>`;
+  }
+
+  function gate() {
+    const a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
+    app.innerHTML = `
+      <h2>Área dos pais</h2>
+      <form class="box" id="gate" style="display:grid;gap:1rem">
+        <label style="font-weight:800">Para entrar, resolva: quanto é ${a} × ${b}?
+          <input type="number" id="ans" inputmode="numeric" required style="font:inherit;padding:.75rem 1rem;border:3px solid var(--line);border-radius:16px;min-height:48px;display:block;margin-top:.4rem">
+        </label>
+        <button class="btn" type="submit">Entrar</button>
+        <p id="err" role="alert" style="font-weight:700;color:var(--tomato)"></p>
+      </form>`;
+    document.getElementById('gate').onsubmit = (e) => {
+      e.preventDefault();
+      if (+document.getElementById('ans').value === a * b) panel();
+      else { document.getElementById('err').textContent = 'Resposta incorreta. Tente de novo.'; }
+    };
+  }
+
+  function panel() {
+    const S = load();
+    if (!S || !S.name) {
+      app.innerHTML = '<h2>Painel dos pais</h2><div class="box"><p class="empty">Ainda não há progresso neste aparelho. Peça para a criança jogar a primeira fase.</p></div>';
+      return;
+    }
+    const levels = Object.keys(S.done).length;
+    const weak = Object.entries(S.weak || {}).sort((a, b) => b[1] - a[1]).slice(0, 6);
+    app.innerHTML = `
+      <h2>Progresso de ${esc(S.name)}</h2>
+      <div class="stat-row">
+        <div class="stat"><b>${S.streak}</b><span>dias seguidos</span></div>
+        <div class="stat"><b>${S.stars}</b><span>estrelas</span></div>
+        <div class="stat"><b>${levels}</b><span>fases jogadas</span></div>
+      </div>
+      <section class="box">
+        <h3>Palavras que já monta</h3>
+        ${S.words.length ? `<div class="chips">${S.words.map(w => `<span class="chip">${esc(w)}</span>`).join('')}</div>` : '<p class="empty">Nenhuma ainda. As palavras aparecem a partir da fase 5.</p>'}
+      </section>
+      <section class="box">
+        <h3>Para reforçar</h3>
+        ${weak.length ? `<div class="chips">${weak.map(([k, n]) => `<span class="chip warn">${esc(k)} · ${n}×</span>`).join('')}</div><p style="margin-top:.7rem;color:var(--ink-soft)">O número mostra quantas vezes a criança errou. Treine falando essas sílabas no dia a dia.</p>` : '<p class="empty">Sem erros registrados. Ótimo!</p>'}
+      </section>
+      <section class="box">
+        <h3>Resumo dos últimos 7 dias</h3>
+        <p>${weekly(S)}</p>
+      </section>
+      <section class="box" id="fora">
+        <h3>Brincadeiras fora da tela</h3>
+        ${offline(S)}
+        <p style="margin-top:.7rem;color:var(--ink-soft)">Sugestões complementares, sempre com um adulto por perto. Não substituem a brincadeira livre nem o apoio de professores e profissionais.</p>
+      </section>
+      <section class="box">
+        <h3>Meta diária</h3>
+        <p style="margin-bottom:.6rem;color:var(--ink-soft)">Quantas fases por dia. Ao cumprir, o jogo sugere uma pausa fora da tela (sem bloquear).</p>
+        <select id="goal" style="font:inherit;padding:.6rem 1rem;border:3px solid var(--line);border-radius:16px;min-height:48px;background:#fff;color:var(--ink)">
+          ${[1, 2, 3, 4, 5, 8].map(g => `<option value="${g}" ${(S.goal || 3) === g ? 'selected' : ''}>${g} fase${g > 1 ? 's' : ''} por dia</option>`).join('')}
+        </select>
+      </section>
+      <section class="box">
+        <h3>Idade da criança</h3>
+        <p style="margin-bottom:.6rem;color:var(--ink-soft)">As fases e a dificuldade se ajustam à idade. Se estiver fácil ou difícil demais, mude aqui.</p>
+        <select id="age" style="font:inherit;padding:.6rem 1rem;border:3px solid var(--line);border-radius:16px;min-height:48px;background:#fff;color:var(--ink)">
+          ${[2, 3, 4, 5, 6, 7, 8].map(a => `<option value="${a}" ${+S.age === a ? 'selected' : ''}>${a === 8 ? '8 anos ou mais' : a + ' anos'}</option>`).join('')}
+        </select>
+      </section>
+      <section class="box">
+        <h3>Privacidade</h3>
+        <p style="color:var(--ink-soft)">Nome, idade e progresso ficam apenas neste aparelho (armazenamento local do navegador). Nada é enviado a servidores, não há anúncios e não coletamos localização, fotos ou voz. Você pode apagar tudo no botão abaixo.</p>
+      </section>
+      <button class="danger" id="wipe" type="button">Apagar todos os dados deste aparelho</button>`;
+    document.getElementById('goal').onchange = (e) => { S.goal = +e.target.value; localStorage.setItem(KEY, JSON.stringify(S)); };
+    document.getElementById('age').onchange = (e) => { S.age = +e.target.value; localStorage.setItem(KEY, JSON.stringify(S)); };
+    document.getElementById('wipe').onclick = () => {
+      if (confirm('Apagar nome e progresso da criança? Isso não pode ser desfeito.')) { localStorage.removeItem(KEY); panel(); }
+    };
+  }
+  gate();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Letrinha — jogar</title>
+<meta name="theme-color" content="#bfe0ff">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="game.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="owl" viewBox="0 0 120 120">
+    <path d="M26 30 L38 14 L48 30 Z M94 30 L82 14 L72 30 Z" fill="#a9744f" stroke="#1f2a44" stroke-width="4" stroke-linejoin="round"/>
+    <ellipse cx="60" cy="68" rx="40" ry="42" fill="#a9744f" stroke="#1f2a44" stroke-width="4"/>
+    <ellipse cx="60" cy="82" rx="24" ry="26" fill="#ffe2b8"/>
+    <circle cx="43" cy="55" r="16" fill="#fff" stroke="#1f2a44" stroke-width="4"/>
+    <circle cx="77" cy="55" r="16" fill="#fff" stroke="#1f2a44" stroke-width="4"/>
+    <circle cx="45" cy="56" r="6.5" fill="#1f2a44"/>
+    <circle cx="75" cy="56" r="6.5" fill="#1f2a44"/>
+    <circle cx="47" cy="53.5" r="2" fill="#fff"/>
+    <circle cx="77" cy="53.5" r="2" fill="#fff"/>
+    <ellipse cx="43" cy="55" rx="16" ry="0" fill="#a9744f" stroke="#1f2a44" stroke-width="4"><animate attributeName="ry" values="0;0;16;0" keyTimes="0;0.92;0.96;1" dur="4s" repeatCount="indefinite"/></ellipse>
+    <ellipse cx="77" cy="55" rx="16" ry="0" fill="#a9744f" stroke="#1f2a44" stroke-width="4"><animate attributeName="ry" values="0;0;16;0" keyTimes="0;0.92;0.96;1" dur="4s" repeatCount="indefinite"/></ellipse>
+    <path d="M53 68 L67 68 L60 80 Z" fill="#ffc83d" stroke="#1f2a44" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M18 70 Q10 92 28 100 Q30 82 18 70 Z M102 70 Q110 92 92 100 Q90 82 102 70 Z" fill="#8a5b3b" stroke="#1f2a44" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M46 108 L46 114 M54 108 L54 114 M66 108 L66 114 M74 108 L74 114" stroke="#1f2a44" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="star" viewBox="0 0 24 24">
+    <path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z" fill="#ffc83d" stroke="#1f2a44" stroke-width="1.8" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="fire" viewBox="0 0 24 24">
+    <path d="M12 2c1 4 6 6 6 12a6 6 0 0 1-12 0c0-3 2-4 3-6 1 1 1 2 2 2 1-2 1-5 1-8z" fill="#ff8a3d" stroke="#1f2a44" stroke-width="1.8" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="sound" viewBox="0 0 24 24">
+    <path d="M3 9v6h4l5 4V5L7 9H3z" fill="#1f2a44"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="#1f2a44" stroke-width="2.2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="note" viewBox="0 0 24 24">
+    <path d="M9 18V5l11-2v13" fill="none" stroke="#1f2a44" stroke-width="2.2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="3" fill="#1f2a44"/><circle cx="17.5" cy="16" r="3" fill="#1f2a44"/>
+  </symbol>
+  <symbol id="note-off" viewBox="0 0 24 24">
+    <path d="M9 18V5l11-2v13" fill="none" stroke="#1f2a44" stroke-width="2.2" stroke-linejoin="round" opacity=".45"/><circle cx="6.5" cy="18" r="3" fill="#1f2a44" opacity=".45"/><circle cx="17.5" cy="16" r="3" fill="#1f2a44" opacity=".45"/><path d="M3 3l18 18" stroke="#e8553d" stroke-width="2.6" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<div class="game-shell">
+  <div class="hud" id="hud"></div>
+  <main id="app" class="screen" aria-live="polite"></main>
+</div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<dialog id="welcome" aria-labelledby="welcomeTitle">
+  <h2 id="welcomeTitle">Oi! Eu sou a Cora.</h2>
+  <p>Antes de brincar, um adulto responsável precisa autorizar.</p>
+  <form method="dialog" id="welcomeForm">
+    <label>Primeiro nome da criança
+      <input type="text" id="childName" maxlength="20" autocomplete="off" required>
+    </label>
+    <label>Idade da criança
+      <select id="childAge" required>
+        <option value="" disabled selected>Escolha</option>
+        <option value="2">2 anos</option>
+        <option value="3">3 anos</option>
+        <option value="4">4 anos</option>
+        <option value="5">5 anos</option>
+        <option value="6">6 anos</option>
+        <option value="7">7 anos</option>
+        <option value="8">8 anos ou mais</option>
+      </select>
+    </label>
+    <label class="check">
+      <input type="checkbox" id="consent" required>
+      <span>Sou responsável legal pela criança e autorizo o uso do nome e do progresso nas fases. Os dados ficam neste aparelho e posso apagá-los no painel dos pais.</span>
+    </label>
+    <button class="btn" type="submit">Começar a brincar</button>
+  </form>
+</dialog>
+
+<script src="game.js"></script>
+</body>
+</html>
