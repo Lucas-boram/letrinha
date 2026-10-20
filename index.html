@@ -59,17 +59,6 @@
       <p><span class="lp-fine">Funciona no celular, tablet e computador, sem instalar nada. Aos 2 e 3 anos, com um adulto ao lado.</span></p>
     </div>
 
-    <div class="lp-demo" id="demo" aria-label="Demonstração do jogo">
-      <div class="d-head">
-        <svg class="d-owl" aria-hidden="true"><use href="#owl"/></svg>
-        <p class="d-say" id="dSay" aria-live="polite">Toque no que eu falar: BO</p>
-      </div>
-      <div class="d-pic" aria-hidden="true">⚽</div>
-      <div class="d-slots" aria-hidden="true"><div class="d-slot" id="s0"></div><div class="d-slot" id="s1"></div></div>
-      <div class="d-tiles" id="dTiles"></div>
-      <div class="d-foot"><span>Experimente, é de verdade.</span><button type="button" id="dHear">Ouvir a Cora</button></div>
-      <div class="lp-confetti" id="dConf" aria-hidden="true"></div>
-    </div>
   </div>
 </section>
 
@@ -138,7 +127,7 @@
       <div class="lp-plan pro">
         <h3>Premium</h3>
         <div class="pr">R$ 19,90 <small>/mês</small></div>
-        <ul><li>Todas as fases e novas todo mês</li><li>Painel com resumo semanal</li><li>Brincadeiras fora da tela</li><li>Ou R$ 149,90 por ano</li></ul>
+        <ul><li>Todas as fases e novas todo mês</li><li>Painel com resumo semanal</li><li>Brincadeiras fora da tela</li></ul>
       </div>
       <p class="lp-note">Valores em teste, ainda sem cobrança ativa.</p>
     </div>
@@ -166,44 +155,6 @@
 </footer>
 
 <script>
-  /* demo jogável: BO + LA */
-  (() => {
-    const demo = document.getElementById('demo'), say = document.getElementById('dSay'), tiles = document.getElementById('dTiles');
-    const steps = [{ want: 'BO', opts: ['BA', 'BO', 'BU'] }, { want: 'LA', opts: ['LE', 'LU', 'LA'] }];
-    let i = 0, audio = null;
-    const play = (k) => { try { if (audio) audio.pause(); audio = new Audio('audio/' + k.toLowerCase() + '.mp3'); audio.play().catch(() => {}); } catch (e) {} };
-    const confetti = () => {
-      const box = document.getElementById('dConf'); box.innerHTML = '';
-      const cols = ['#ffc83d', '#d63a1f', '#9be7c4', '#1f2a44', '#bfe0ff'];
-      for (let n = 0; n < 36; n++) {
-        const p = document.createElement('i');
-        p.style.cssText = `background:${cols[n % 5]};--x:${(Math.random() - .5) * 360}px;--y:${-80 + Math.random() * 260}px;--r:${Math.random() * 720}deg`;
-        box.appendChild(p);
-      }
-    };
-    const render = () => {
-      const s = steps[i];
-      say.textContent = 'Toque no que eu falar: ' + s.want;
-      tiles.innerHTML = s.opts.map(o => `<button class="tile" type="button" data-v="${o}">${o}</button>`).join('');
-      tiles.querySelectorAll('.tile').forEach(b => b.onclick = () => pick(b, s));
-    };
-    const pick = (b, s) => {
-      if (b.dataset.v !== s.want) { b.classList.add('bad'); say.textContent = 'Quase! Escute de novo.'; play(s.want); setTimeout(() => b.classList.remove('bad'), 400); return; }
-      b.classList.add('good');
-      const slot = document.getElementById('s' + i); slot.textContent = s.want; slot.classList.add('on');
-      i++;
-      if (i < steps.length) { say.textContent = 'Muito bem!'; play('ok1'); setTimeout(render, 700); }
-      else {
-        tiles.querySelectorAll('.tile').forEach(t => t.disabled = true);
-        demo.classList.add('win'); say.textContent = 'BOLA! Você leu!'; confetti(); play('bola');
-        tiles.innerHTML = '<button class="btn" type="button" id="again" style="grid-column:1/-1">Jogar de novo</button>';
-        document.getElementById('again').onclick = () => { i = 0; demo.classList.remove('win'); ['s0', 's1'].forEach(id => { const e = document.getElementById(id); e.textContent = ''; e.classList.remove('on'); }); render(); };
-      }
-    };
-    document.getElementById('dHear').onclick = () => play(i < steps.length ? steps[i].want : 'bola');
-    render();
-  })();
-
   const form = document.getElementById('waitlist');
   const msg = document.getElementById('formMsg');
   form.addEventListener('submit', (e) => {

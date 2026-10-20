@@ -19,7 +19,7 @@ body.lp { background: #fffaf0; }
     linear-gradient(90deg, transparent 0 calc(4.2rem - 2px), #f08a80 calc(4.2rem - 2px) calc(4.2rem), transparent calc(4.2rem)),
     repeating-linear-gradient(180deg, transparent 0 calc(2.6rem - 2px), #cfe3f6 calc(2.6rem - 2px) 2.6rem);
 }
-.lp-hero .lp-wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.lp-hero .lp-wrap { display: grid; grid-template-columns: minmax(0, 46rem); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
 .lp-hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 800; letter-spacing: -.03em; line-height: .95; }
 .lp-hero h1 .sy { display: inline-block; background: var(--sun); border: 3px solid var(--line); border-radius: .22em; padding: 0 .16em; box-shadow: 0 .07em 0 var(--line); transform: rotate(-2deg); }
 .lp-hero h1 .sy + .plus { margin: 0 .05em; }
